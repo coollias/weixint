@@ -27,7 +27,7 @@ public class pushController {
 
     @PostMapping(value = "/api/push" ,produces = "application/xml;charset=UTF-8")
     ApiResponse create( @RequestBody String encryptedMsg) {
-
+        int a=0;
         return null;
     }
 
