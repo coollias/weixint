@@ -16,19 +16,25 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.List;
 
-/**
- * counter控制器
- */
-@RestController
 
+@RestController
+@RequestMapping("/api")
 public class pushController {
 
+    @PostMapping("/push")
+    public ResponseEntity<?> handlePush(
+            @RequestBody Map<String,Object> jsonPayload,  // JSON模式
+            @RequestParam("signature") String signature,
+            @RequestParam("timestamp") String timestamp,
+            @RequestParam("nonce") String nonce) {
 
+        // 1. 验证签名
+        if(!checkSignature(signature, timestamp, nonce)) {
+            return ResponseEntity.status(403).build();
+        }
 
-    @PostMapping(value = "/api/push" ,produces = "application/xml;charset=UTF-8")
-    ApiResponse create( @RequestBody String encryptedMsg) {
-        int a=0;
-        return null;
+        // 2. 处理消息逻辑
+        System.out.println("收到推送：" + jsonPayload);
+        return ResponseEntity.ok().build();
     }
-
 }
